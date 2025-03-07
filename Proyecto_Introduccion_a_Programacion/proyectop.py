@@ -9,6 +9,7 @@ password = ""
 intentos = 1
 #----Menu----
 menu = 0
+repetir_menu = 1
 #Productos
 computadora = 0
 monitor = 0
@@ -62,6 +63,7 @@ print("Facturacion dijite 4")
 menu = int(input("Dijite el modulo al que desea ingresar: "))
 
 #----------------------Seleccion al modulo a ingresar-----------------------------------
+
 if menu == 1:
         print("Paquetes de productos")
 elif menu == 2:
