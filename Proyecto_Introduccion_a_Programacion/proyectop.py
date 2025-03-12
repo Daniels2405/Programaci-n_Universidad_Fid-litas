@@ -62,10 +62,10 @@ direccion_cliente = input("Direccion: ")
 #-------------------------Menu-------------------------------------
 while repetir_menu == 1:
         print("-----Se encuentra en el menu de Austin's Electronics-----")
-        print("--Paquetes de productos dijite 1--")
-        print("--Productos dijite 2--")
-        print("--Historial dijite 3--")
-        print("--Facturacion dijite 4--")
+        print("--Paquetes de productos dijite | 1 |--")
+        print("--Productos dijite | 2 |--")
+        print("--Historial dijite | 3 |--")
+        print("--Facturacion dijite | 4 |--")
         menu = int(input("Dijite el modulo al que desea ingresar: "))   
         #----------------------Seleccion al modulo a ingresar-----------------------------------   
         # Paquetes     
@@ -73,10 +73,10 @@ while repetir_menu == 1:
                 while repetir_paquete == 1:
                         print("Paquetes")
                         print("---Selecione el paquete que desea dijitando el numero---")
-                        print("Paquete 1: 1 Computadora, 1 Monitor, 1 Alexa | $578000 ya aplicado un descuento del 15%")
-                        print("Paquete 2: 1 camara, 1 celular | $229500 ya aplicando el descuento del 15%")
-                        print("Paquete 3: 1 computadora, 1 monitor | 382500 aplicando el descuento del 15%")
-                        print("Paquete 4: 1 celular, 1 alexa | 365500 aplicando el descuento del 15%")
+                        print("Paquete | 1 |: 1 Computadora, 1 Monitor, 1 Alexa | $578000 ya aplicado un descuento del 15%")
+                        print("Paquete | 2 |: 1 camara, 1 celular | $229500 ya aplicando el descuento del 15%")
+                        print("Paquete | 3 |: 1 computadora, 1 monitor | 382500 aplicando el descuento del 15%")
+                        print("Paquete | 4 |: 1 celular, 1 alexa | 365500 aplicando el descuento del 15%")
                         paquete = int(input("Dijite el paquete: "))
                         if paquete == 1:
                                 computadora += 1
@@ -97,17 +97,17 @@ while repetir_menu == 1:
                                 print("Paquete 4 agregado correctamente")
                         else:
                                 print("Opcion no valida")
-                        repetir_paquete = int(input("Si desea agregar otro paquete dijite 1, si desea salir al menu elija 2: "))
+                        repetir_paquete = int(input("Si desea agregar otro paquete dijite | 1 |, si desea salir al menu elija | 2 |: "))
         #Productos
         elif menu == 2:
                 while repetir_producto == 1:
                         print("Productos")
                         print("---Selecione el producto que desea dijitando el numero---")
-                        print("--Computadora: $300000--")
-                        print("--Monitor: $150000--")
-                        print("--Celular: $200000--")
-                        print("--Alexa: $230000--")
-                        print("--Camara: $70000--")
+                        print("--| 1 | Computadora: $300000--")
+                        print("--| 2 | Monitor: $150000--")
+                        print("--| 3 | Celular: $200000--")
+                        print("--| 4 | Alexa: $230000--")
+                        print("--| 5 | Camara: $70000--")
                         producto = int(input("Dijite el producto: "))
                         if producto == 1:
                                 computadora += 1
@@ -126,17 +126,25 @@ while repetir_menu == 1:
                                 print("Camara agregada")
                         else:
                                 print("Opcion no valida")
-                        repetir_producto = int(input("Si desea agregar otro producto dijite 1, si desea salir al menu elija 2: "))
+                        repetir_producto = int(input("Si desea agregar otro producto dijite | 1 |, si desea salir al menu elija | 2 |: "))
         #Historial
         elif menu == 3:
                 print("Historial")
+                print("El cliente: ", nombre_cliente, apellido_cliente, " Tiene los siguientes productos:")
+                print("Computadoras: ", computadora)
+                print("Monitores: ", monitor)
+                print("Celulares: ", celular)
+                print("Alexas: ", alexa)
+                print("Camaras: ", camara)
+                print("Con un subTotal de $", computadora * computadora_precio + monitor * monitor_precio + celular * celular_precio + 
+                      alexa * alexa_precio + camara * camara_precio)
         #Facturacion
         elif menu == 4:
                 print("Facturacion")
                 sys.exit()
         else:
                 print("Opcion no valida")
-        
-        repetir_menu = int(input("Si desea agregar otro producto dijite 1, si desea ir a la facturación 2: "))
+        print("")
+        repetir_menu = int(input("Si desea volver al menu principal dijite | 1 |, si desea ir a la facturación | 2 |: "))
 
 print("Fin")
