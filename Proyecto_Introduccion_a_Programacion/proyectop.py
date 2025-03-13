@@ -27,6 +27,11 @@ monitor_precio = 150000
 celular_precio = 200000
 alexa_precio = 230000
 camara_precio = 70000
+#Facturacion
+ahorro = 0
+subtotal = 0
+iva = 0
+total = 0
 #-------------------------Librerias----------------------------------------------
 import sys
 
@@ -83,18 +88,22 @@ while repetir_menu == 1:
                                 monitor += 1
                                 alexa += 1
                                 print("Paquete 1 agregado correctamente")
+                                ahorro = (computadora_precio + monitor_precio + alexa_precio) * 0.15
                         elif paquete == 2:
                                 camara += 1
                                 celular += 1
                                 print("Paquete 2 agregado correctamente")
+                                ahorro = (camara_precio + celular_precio) * 0.15
                         elif paquete == 3:
                                 computadora += 1
                                 monitor += 1
                                 print("Paquete 3 agregado correctamente")
+                                ahorro = (computadora_precio + monitor_precio) * 0.15
                         elif paquete == 4:
                                 celular += 1
                                 alexa += 1
                                 print("Paquete 4 agregado correctamente")
+                                ahorro = (celular_precio + alexa_precio) * 0.15
                         else:
                                 print("Opcion no valida")
                         repetir_paquete = int(input("Si desea agregar otro paquete dijite | 1 |, si desea salir al menu elija | 2 |: "))
@@ -140,11 +149,40 @@ while repetir_menu == 1:
                       alexa * alexa_precio + camara * camara_precio)
         #Facturacion
         elif menu == 4:
+                computadora_precio *= computadora
+                monitor_precio *= monitor
+                celular_precio *= celular
+                alexa_precio *= alexa
+                camara_precio *= camara
                 print("Facturacion")
+                print("Nombre: ----", nombre_cliente, "----")
+                print("Apellido: ----", apellido_cliente, "----")
+                print("Cedula: ----", cedula_cliente, "----")
+                print("Telefono: ----", telefono_cliente, "----")
+                print("Correo: ----", correo_cliente, "----")
+                print("Direccion: ----", direccion_cliente, "----")
+                print("| Computadoras: ", computadora, " | Precio: $", computadora_precio, " |")
+                print("| Monitores: ", monitor, " | Precio: $", monitor_precio, " |")
+                print("| Celulares: ", celular, " | Precio: $", celular_precio, " |")
+                print("| Alexas: ", alexa, " | Precio: $", alexa_precio, " |")
+                print("| Camaras: ", camara, " | Precio: $", camara_precio, " |")
+                subtotal = computadora_precio + monitor_precio + celular_precio + alexa_precio + camara_precio
+                print("Subtotal: $", subtotal)
+                print("Ahorro en paquetes: $", ahorro)
+                iva = subtotal * 0.13
+                print("IVA: $", iva)
+                total = subtotal + iva - ahorro
+                print("Total: $", total)
+                print("Al total a pagar se aplicara un descuento del 25%")
+                total = total * 0.75
+                print("Total a pagar con descuento: $", total)
+                print("")
+                print("Gracias por su compra")
                 sys.exit()
         else:
                 print("Opcion no valida")
         print("")
-        repetir_menu = int(input("Si desea volver al menu principal dijite | 1 |, si desea ir a la facturación | 2 |: "))
+        repetir_menu = int(input("Si desea volver al menu principal dijite | 1 |, si desea cerrar el programa | 2 |: "))
 
-print("Fin")
+print("")
+print("Gracias por visitarnos")
