@@ -63,6 +63,9 @@ cedula_cliente = input("Cedula: ")
 telefono_cliente = input("Telefono: ")
 correo_cliente = input("Correo: ")
 direccion_cliente = input("Direccion: ")
+print("")
+print("-----Datos registrados correctamente-----")
+print("")
 
 #-------------------------Menu-------------------------------------
 while repetir_menu == 1:
@@ -71,7 +74,8 @@ while repetir_menu == 1:
         print("--Productos dijite | 2 |--")
         print("--Historial dijite | 3 |--")
         print("--Facturacion dijite | 4 |--")
-        menu = int(input("Dijite el modulo al que desea ingresar: "))   
+        menu = int(input("Dijite el modulo al que desea ingresar: "))
+        print("")   
         #----------------------Seleccion al modulo a ingresar-----------------------------------   
         # Paquetes     
         if menu == 1:
@@ -183,6 +187,7 @@ while repetir_menu == 1:
                 print("Opcion no valida")
         print("")
         repetir_menu = int(input("Si desea volver al menu principal dijite | 1 |, si desea cerrar el programa | 2 |: "))
+        print("")
 
 print("")
 print("Gracias por visitarnos")
