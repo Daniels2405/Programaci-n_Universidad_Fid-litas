@@ -1,10 +1,6 @@
 #--------------------------Proyecto Introduccion a la programación-----------------------------------------
 #--------------------------Variables---------------------------------------------
 #Loggin
-user_admin = 0
-pass_admin = 0
-user_personal = 1
-pass_personal = 1
 user = ""
 password = ""
 intentos = 1
@@ -19,18 +15,8 @@ repetir_paquete = 1
 producto = 0
 repetir_producto = 1
 #Productos
-computadora = 0
-monitor = 1
-celular = 2
-alexa = 3
-camara = 4
-productos = [[300000, 0], [150000, 0], [200000, 0], [230000, 0], [70000, 0]] #Representan el precio y la cantidad de cada producto
-#precios
-computadora_precio = 300000
-monitor_precio = 150000
-celular_precio = 200000
-alexa_precio = 230000
-camara_precio = 70000
+productos = [["Computadora", 300000, 0], ["Monitor", 150000, 0], ["Celular", 200000, 0], 
+             ["Alexa", 230000, 0], ["Camara", 70000, 0]] #Representan el precio y la cantidad de cada producto
 #Facturacion
 ahorro = 0
 subtotal = 0
@@ -46,7 +32,7 @@ user = input("Ingrese nombre de Usuario: ")
 password = input("Ingrese contraseña: ")
 
 #----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
-while user != (users[0][0] or users[0][1]) or password != (user[1][0] or users[1][1]):
+while user != (users[0][0] and users[0][1]) or password != (user[1][0] and users[1][1]):
         print("|Usuario o contraseña incorrectos|")
         intentos += 1
         print("|Le quedan ", 4 - intentos, " intentos|")
@@ -67,8 +53,6 @@ cliente[2] = input("Cedula: ")
 cliente[3] = input("Telefono: ")
 cliente[4] = input("Correo: ")
 cliente[5] = input("Direccion: ")
-print("")
-print("Se registro: ", cliente)
 print("")
 print("-----Datos registrados correctamente-----")
 print("")
@@ -94,26 +78,26 @@ while repetir_menu == 1:
                         print("Paquete | 4 |: 1 celular, 1 alexa | 365500 aplicando el descuento del 15%")
                         paquete = int(input("Dijite el paquete: "))
                         if paquete == 1:
-                                computadora += 1
-                                monitor += 1
-                                alexa += 1
-                                print("Paquete 1 agregado correctamente")
-                                ahorro = (computadora_precio + monitor_precio + alexa_precio) * 0.15
+                                        productos[0][2] += 1  # Computadora
+                                        productos[1][2] += 1  # Monitor
+                                        productos[3][2] += 1  # Alexa
+                                        print("Paquete 1 agregado correctamente")
+                                        ahorro += (productos[0][1] + productos[1][1] + productos[3][1]) * 0.15
                         elif paquete == 2:
-                                camara += 1
-                                celular += 1
-                                print("Paquete 2 agregado correctamente")
-                                ahorro = (camara_precio + celular_precio) * 0.15
+                                        productos[4][2] += 1  # Camara
+                                        productos[2][2] += 1  # Celular
+                                        print("Paquete 2 agregado correctamente")
+                                        ahorro += (productos[4][1] + productos[2][1]) * 0.15
                         elif paquete == 3:
-                                computadora += 1
-                                monitor += 1
-                                print("Paquete 3 agregado correctamente")
-                                ahorro = (computadora_precio + monitor_precio) * 0.15
+                                        productos[0][2] += 1  # Computadora
+                                        productos[1][2] += 1  # Monitor
+                                        print("Paquete 3 agregado correctamente")
+                                        ahorro += (productos[0][1] + productos[1][1]) * 0.15
                         elif paquete == 4:
-                                celular += 1
-                                alexa += 1
-                                print("Paquete 4 agregado correctamente")
-                                ahorro = (celular_precio + alexa_precio) * 0.15
+                                        productos[2][2] += 1  # Celular
+                                        productos[3][2] += 1  # Alexa
+                                        print("Paquete 4 agregado correctamente")
+                                        ahorro += (productos[2][1] + productos[3][1]) * 0.15
                         else:
                                 print("Opcion no valida")
                         repetir_paquete = int(input("Si desea agregar otro paquete dijite | 1 |, si desea salir al menu elija | 2 |: "))
@@ -129,19 +113,19 @@ while repetir_menu == 1:
                         print("--| 5 | Camara: $70000--")
                         producto = int(input("Dijite el producto: "))
                         if producto == 1:
-                                computadora += 1
+                                productos[0][2] += 1
                                 print("Computadora agregada")
                         elif producto == 2:
-                                monitor += 1
+                                productos[1][2] += 1
                                 print("Monitor agregado")
                         elif producto == 3:
-                                celular += 1
+                                productos[2][2] += 1
                                 print("Celular agregado")
                         elif producto == 4:
-                                alexa += 1
+                                productos[3][2] += 1
                                 print("Alexa agregado")
                         elif producto == 5:
-                                camara += 1
+                                productos[4][2] += 1
                                 print("Camara agregada")
                         else:
                                 print("Opcion no valida")
@@ -149,33 +133,33 @@ while repetir_menu == 1:
         #Historial
         elif menu == 3:
                 print("Historial")
-                print("El cliente: ", nombre_cliente, apellido_cliente, " Tiene los siguientes productos:")
-                print("Computadoras: ", computadora)
-                print("Monitores: ", monitor)
-                print("Celulares: ", celular)
-                print("Alexas: ", alexa)
-                print("Camaras: ", camara)
-                print("Con un subTotal de $", computadora * computadora_precio + monitor * monitor_precio + celular * celular_precio + 
-                      alexa * alexa_precio + camara * camara_precio)
-        #Facturacion
+                print("El cliente: ", cliente[0], cliente[1], " Tiene los siguientes productos:")
+                print("Computadoras: ", productos[0][2])
+                print("Monitores: ", productos[1][2])
+                print("Celulares: ", productos[2][2])
+                print("Alexas: ", productos[3][2])
+                print("Camaras: ", productos[4][2])
+                print("Con un subTotal de $", 
+                          productos[0][2] * productos[0][1] + 
+                          productos[1][2] * productos[1][1] + 
+                          productos[2][2] * productos[2][1] + 
+                          productos[3][2] * productos[3][1] + 
+                          productos[4][2] * productos[4][1])
+#Facturacion
         elif menu == 4:
-                computadora_precio *= computadora
-                monitor_precio *= monitor
-                celular_precio *= celular
-                alexa_precio *= alexa
-                camara_precio *= camara
+                computadora_precio = productos[0][1] * productos[0][2]
+                monitor_precio = productos[1][1] * productos[1][2]
+                celular_precio = productos[2][1] * productos[2][2]
+                alexa_precio = productos[3][1] * productos[3][2]
+                camara_precio = productos[4][1] * productos[4][2]
                 print("Facturacion")
-                print("Nombre: ----", nombre_cliente, "----")
-                print("Apellido: ----", apellido_cliente, "----")
-                print("Cedula: ----", cedula_cliente, "----")
-                print("Telefono: ----", telefono_cliente, "----")
-                print("Correo: ----", correo_cliente, "----")
-                print("Direccion: ----", direccion_cliente, "----")
-                print("| Computadoras: ", computadora, " | Precio: $", computadora_precio, " |")
-                print("| Monitores: ", monitor, " | Precio: $", monitor_precio, " |")
-                print("| Celulares: ", celular, " | Precio: $", celular_precio, " |")
-                print("| Alexas: ", alexa, " | Precio: $", alexa_precio, " |")
-                print("| Camaras: ", camara, " | Precio: $", camara_precio, " |")
+                for i in cliente:
+                        print("---|", i, "|---")
+                print("| Computadoras: ", productos[0][2], " | Precio: $", computadora_precio, " |")
+                print("| Monitores: ", productos[1][2], " | Precio: $", monitor_precio, " |")
+                print("| Celulares: ", productos[2][2], " | Precio: $", celular_precio, " |")
+                print("| Alexas: ", productos[3][2], " | Precio: $", alexa_precio, " |")
+                print("| Camaras: ", productos[4][2], " | Precio: $", camara_precio, " |")
                 subtotal = computadora_precio + monitor_precio + celular_precio + alexa_precio + camara_precio
                 print("Subtotal: $", subtotal)
                 print("Ahorro en paquetes: $", ahorro)
