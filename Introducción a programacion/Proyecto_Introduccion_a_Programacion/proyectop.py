@@ -1,13 +1,16 @@
 #--------------------------Proyecto Introduccion a la programación-----------------------------------------
 #--------------------------Variables---------------------------------------------
 #Loggin
-user_admin = "admin"
-pass_admin = "admin"
-user_personal = "personal"
-pass_personal = "personal"
+user_admin = 0
+pass_admin = 0
+user_personal = 1
+pass_personal = 1
 user = ""
 password = ""
 intentos = 1
+users = [["admin", "personal"], ["admin", "personal"]] #Lista de usuarios y contraseñas
+#Datos del cliente
+cliente = ["", "", "", "", "", ""]
 #----Menu----
 menu = 0
 repetir_menu = 1
@@ -17,10 +20,11 @@ producto = 0
 repetir_producto = 1
 #Productos
 computadora = 0
-monitor = 0
-celular = 0
-alexa = 0
-camara = 0
+monitor = 1
+celular = 2
+alexa = 3
+camara = 4
+productos = [[300000, 0], [150000, 0], [200000, 0], [230000, 0], [70000, 0]] #Representan el precio y la cantidad de cada producto
 #precios
 computadora_precio = 300000
 monitor_precio = 150000
@@ -42,7 +46,7 @@ user = input("Ingrese nombre de Usuario: ")
 password = input("Ingrese contraseña: ")
 
 #----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
-while user != (user_admin or user_personal) or password != (pass_admin or pass_personal):
+while user != (users[0][0] or users[0][1]) or password != (user[1][0] or users[1][1]):
         print("|Usuario o contraseña incorrectos|")
         intentos += 1
         print("|Le quedan ", 4 - intentos, " intentos|")
@@ -57,12 +61,14 @@ while user != (user_admin or user_personal) or password != (pass_admin or pass_p
 print("-----Bienvenido al sistema de facturacion de Austin's Electronics-----")
 print("--Primero iniciaremos con el registro--")
 print("--Por favor ingrese los siguientes datos--")
-nombre_cliente = input("Nombre: ")
-apellido_cliente = input("Apellido: ")
-cedula_cliente = input("Cedula: ")
-telefono_cliente = input("Telefono: ")
-correo_cliente = input("Correo: ")
-direccion_cliente = input("Direccion: ")
+cliente[0] = input("Nombre: ")
+cliente[1] = input("Apellido: ")
+cliente[2] = input("Cedula: ")
+cliente[3] = input("Telefono: ")
+cliente[4] = input("Correo: ")
+cliente[5] = input("Direccion: ")
+print("")
+print("Se registro: ", cliente)
 print("")
 print("-----Datos registrados correctamente-----")
 print("")
