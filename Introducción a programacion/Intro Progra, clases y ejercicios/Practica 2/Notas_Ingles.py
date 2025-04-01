@@ -76,31 +76,31 @@ for i in range(5):
     #grupo1
     if grupo1[i][1] >= 80:
         aprobados_grupo1 += 1
-        if grupo1[i][1] > nota_mayor:
-            nota_mayor = grupo1[i][1]
-        elif grupo1[i][1] < nota_menor:
-            nota_menor = grupo1[i][1]
+    if grupo1[i][1] > nota_mayor:
+        nota_mayor = grupo1[i][1]
+    if grupo1[i][1] < nota_menor:
+        nota_menor = grupo1[i][1]
     #grupo2
     if grupo2[i][1] >= 80:
         aprobados_grupo2 += 1
-        if grupo2[i][1] > nota_mayor:
-            nota_mayor = grupo2[i][1]
-        elif grupo2[i][1] < nota_menor:
-            nota_menor = grupo2[i][1]
+    if grupo2[i][1] > nota_mayor:
+        nota_mayor = grupo2[i][1]
+    if grupo2[i][1] < nota_menor:
+        nota_menor = grupo2[i][1]
     #grupo3
     if grupo3[i][1] >= 80:
         aprobados_grupo3 += 1
-        if grupo3[i][1] > nota_mayor:
-            nota_mayor = grupo3[i][1]
-        elif grupo3[i][1] < nota_menor:
-            nota_menor = grupo3[i][1]
+    if grupo3[i][1] > nota_mayor:
+        nota_mayor = grupo3[i][1]
+    if grupo3[i][1] < nota_menor:
+        nota_menor = grupo3[i][1]
     #grupo4
     if grupo4[i][1] >= 80:
         aprobados_grupo4 += 1
-        if grupo4[i][1] > nota_mayor:
-            nota_mayor = grupo4[i][1]
-        elif grupo4[i][1] < nota_menor:
-            nota_menor = grupo4[i][1]
+    if grupo4[i][1] > nota_mayor:
+        nota_mayor = grupo4[i][1]
+    if grupo4[i][1] < nota_menor:
+        nota_menor = grupo4[i][1]
 print("El porcentaje de alumnos aprovados en el grupo 1 es :", (aprobados_grupo1 / 5) * 100, "%")
 print("El porcentaje de alumnos aprovados en el grupo 2 es :", (aprobados_grupo2 / 5) * 100, "%")
 print("El porcentaje de alumnos aprovados en el grupo 3 es :", (aprobados_grupo3 / 5) * 100, "%")
