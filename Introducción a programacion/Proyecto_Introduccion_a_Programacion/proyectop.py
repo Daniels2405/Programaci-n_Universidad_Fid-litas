@@ -4,7 +4,10 @@
 user = ""
 password = ""
 intentos = 1
-users = [["admin", "personal"], ["admin", "personal"]] #Lista de usuarios y contraseñas
+user_admin = "admin"
+password_admin = "admin"
+user_personal = "personal"
+password_personal = "personal"
 #Datos del cliente
 cliente = ["", "", "", "", "", ""]
 #----Menu----
@@ -32,7 +35,7 @@ user = input("Ingrese nombre de Usuario: ")
 password = input("Ingrese contraseña: ")
 
 #----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
-while user != (users[0][0] and users[0][1]) or password != (user[1][0] and users[1][1]):
+while (user != user_admin and password != password_admin) and (user != user_personal and password != password_personal):
         print("|Usuario o contraseña incorrectos|")
         intentos += 1
         print("|Le quedan ", 4 - intentos, " intentos|")
