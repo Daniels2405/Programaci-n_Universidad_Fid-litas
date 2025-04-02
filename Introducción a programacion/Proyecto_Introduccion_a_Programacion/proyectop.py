@@ -1,4 +1,18 @@
-#--------------------------Proyecto Introduccion a la programación-----------------------------------------
+'''--------------------------Proyecto Introduccion a la programación-----------------------------------------
+-------------------------- Inventario y Facturación de Tienda Electrónicos--------------------------
+
+-------------------------- Desarrollado por:--------------------------------------------------------
+-------------------------- 1. Andrés Avendaño Jiménez------------------------------------------------------
+-------------------------- 2. Tania Araya Villalta----------------------------------------------------
+-------------------------- 3. Daniel Barrientos Salas----------------------------------------------------
+-------------------------- 4. Ángel Franco Hernández----------------------------------------------------
+
+-------------------------- Datos de inicio de seccion------------------------------------------------
+-------------------------- 1. Usuario: admin----------------------------------------------------
+-------------------------- 2. Contraseña: admin----------------------------------------------------
+-------------------------- 3. Usuario: personal----------------------------------------------------
+-------------------------- 4. Contraseña: personal----------------------------------------------------
+'''
 #--------------------------Variables---------------------------------------------
 #Loggin
 user = ""
@@ -38,11 +52,11 @@ def login(user, password):
 print("----------Bienvenido al sistema de facturacion de Austin's Electronics----------")
 print("----------Por favor inicie sesion----------")
 #----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
-login(user, password)
 while login(user, password) == False:
+        print("")
         print("Usuario o contraseña incorrectos")
         intentos += 1
-        login(user, password)
+        print("")
         if intentos == 3:
                 print("|¡Ha superado el numero de intentos permitidos!|")
                 sys.exit()
@@ -69,6 +83,7 @@ while repetir_menu == 1:
         print("--Productos dijite | 2 |--")
         print("--Historial dijite | 3 |--")
         print("--Facturacion dijite | 4 |--")
+        print("--Salir dijite | 0 |--")
         menu = int(input("Dijite el modulo al que desea ingresar: "))
         print("")   
         #----------------------Seleccion al modulo a ingresar-----------------------------------   
@@ -150,7 +165,7 @@ while repetir_menu == 1:
                           productos[2][2] * productos[2][1] + 
                           productos[3][2] * productos[3][1] + 
                           productos[4][2] * productos[4][1])
-#Facturacion
+        #Facturacion
         elif menu == 4:
                 computadora_precio = productos[0][1] * productos[0][2]
                 monitor_precio = productos[1][1] * productos[1][2]
@@ -177,6 +192,10 @@ while repetir_menu == 1:
                 print("Total a pagar con descuento: $", total)
                 print("")
                 print("Gracias por su compra")
+                sys.exit()
+        #Salir
+        elif menu == 0:
+                print("Gracias por visitarnos")
                 sys.exit()
         else:
                 print("Opcion no valida")
