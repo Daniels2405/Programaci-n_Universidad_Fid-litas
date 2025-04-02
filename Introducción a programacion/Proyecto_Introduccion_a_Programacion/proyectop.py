@@ -4,10 +4,7 @@
 user = ""
 password = ""
 intentos = 1
-user_admin = "admin"
-password_admin = "admin"
-user_personal = "personal"
-password_personal = "personal"
+users = [["admin", "admin"], ["personal", "personal"]]
 #Datos del cliente
 cliente = ["", "", "", "", "", ""]
 #----Menu----
@@ -27,20 +24,25 @@ iva = 0
 total = 0
 #-------------------------Librerias----------------------------------------------
 import sys
-
-
-#-----------------------Programa--------------------------------------------------
-print("----------Bienvenido al sistema de facturacion de Austin's Electronics----------")
-user = input("Ingrese nombre de Usuario: ")
-password = input("Ingrese contraseña: ")
-
-#----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
-while (user != user_admin and password != password_admin) and (user != user_personal and password != password_personal):
-        print("|Usuario o contraseña incorrectos|")
-        intentos += 1
-        print("|Le quedan ", 4 - intentos, " intentos|")
+#-------------------------Funciones---------------------------------------------
+def login(user, password):
         user = input("Ingrese nombre de Usuario: ")
         password = input("Ingrese contraseña: ")
+        if user == users[0][0] and password == users[0][1]:
+                return True
+        elif user == users[1][0] and password == users[1][1]:
+                return True
+        else:
+                return False
+#-----------------------Programa--------------------------------------------------
+print("----------Bienvenido al sistema de facturacion de Austin's Electronics----------")
+print("----------Por favor inicie sesion----------")
+#----------Inicio de sesion en caso de que coloque el usuario y contraseña incorrectos----------------
+login(user, password)
+while login(user, password) == False:
+        print("Usuario o contraseña incorrectos")
+        intentos += 1
+        login(user, password)
         if intentos == 3:
                 print("|¡Ha superado el numero de intentos permitidos!|")
                 sys.exit()
