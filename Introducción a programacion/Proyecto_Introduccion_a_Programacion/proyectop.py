@@ -17,7 +17,7 @@
 #Loggin
 user = ""
 password = ""
-intentos = 1
+intentos = 0
 users = [["admin", "admin"], ["personal", "personal"]]
 #Datos del cliente
 cliente = ["", "", "", "", "", ""]
@@ -48,6 +48,21 @@ def login(user, password):
                 return True
         else:
                 return False
+
+def historial(cliente, productos):
+        print("Historial")
+        print("El cliente: ", cliente[0], cliente[1], " Tiene los siguientes productos:")
+        print("Computadoras: ", productos[0][2])
+        print("Monitores: ", productos[1][2])
+        print("Celulares: ", productos[2][2])
+        print("Alexas: ", productos[3][2])
+        print("Camaras: ", productos[4][2])
+        print("Con un subTotal de $", 
+                  productos[0][2] * productos[0][1] + 
+                  productos[1][2] * productos[1][1] + 
+                  productos[2][2] * productos[2][1] + 
+                  productos[3][2] * productos[3][1] + 
+                  productos[4][2] * productos[4][1])
 #-----------------------Programa--------------------------------------------------
 print("----------Bienvenido al sistema de facturacion de Austin's Electronics----------")
 print("----------Por favor inicie sesion----------")
@@ -55,6 +70,7 @@ print("----------Por favor inicie sesion----------")
 while login(user, password) == False:
         print("")
         print("Usuario o contraseña incorrectos")
+        print("Intentos restantes: ", 3 - intentos)
         intentos += 1
         print("")
         if intentos == 3:
@@ -152,19 +168,7 @@ while repetir_menu == 1:
                         repetir_producto = int(input("Si desea agregar otro producto dijite | 1 |, si desea salir al menu elija | 2 |: "))
         #Historial
         elif menu == 3:
-                print("Historial")
-                print("El cliente: ", cliente[0], cliente[1], " Tiene los siguientes productos:")
-                print("Computadoras: ", productos[0][2])
-                print("Monitores: ", productos[1][2])
-                print("Celulares: ", productos[2][2])
-                print("Alexas: ", productos[3][2])
-                print("Camaras: ", productos[4][2])
-                print("Con un subTotal de $", 
-                          productos[0][2] * productos[0][1] + 
-                          productos[1][2] * productos[1][1] + 
-                          productos[2][2] * productos[2][1] + 
-                          productos[3][2] * productos[3][1] + 
-                          productos[4][2] * productos[4][1])
+                historial(cliente, productos)
         #Facturacion
         elif menu == 4:
                 computadora_precio = productos[0][1] * productos[0][2]
@@ -199,8 +203,6 @@ while repetir_menu == 1:
                 sys.exit()
         else:
                 print("Opcion no valida")
-        print("")
-        repetir_menu = int(input("Si desea volver al menu principal dijite | 1 |, si desea cerrar el programa | 2 |: "))
         print("")
 
 print("")
