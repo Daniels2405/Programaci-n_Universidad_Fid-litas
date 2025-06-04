@@ -3,4 +3,5 @@ Es un repositorio de Daniel Barrientos Salas utilizado para subir los proyectos 
 ## Contacto:
           - correo: dn.barrientossalas@gmail.com | danielbarrientossalas@hotmail.com | dbarrientos00383@ufide.ac.cr
           - tel: +506 8714-9157
+          -Linkedln: linkedin.com/in/daniel-barrientos-salas-1a7218340
           
