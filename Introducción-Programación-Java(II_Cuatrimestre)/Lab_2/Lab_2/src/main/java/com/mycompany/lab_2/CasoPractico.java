@@ -34,7 +34,7 @@ public class CasoPractico {
         System.out.println("Antecedentes: " + Receta1.getPaciente().getHistoriaClinica().getDiagnostico());
         //Receta Medica
         System.out.println("== Receta Generada ==");
-        //System.out.println(""); //El ID
+        System.out.println("Receta Medica #: " + Receta1.getId().getId()); //El ID
         System.out.println("Paciente: " + Receta1.getPaciente().getName() +
                             " (Cédula: " + Receta1.getPaciente().getid() + 
                             ", Edad: " + Receta1.getPaciente().getAge());

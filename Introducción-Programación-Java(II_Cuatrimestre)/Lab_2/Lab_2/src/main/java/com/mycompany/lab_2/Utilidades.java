@@ -9,5 +9,14 @@ package com.mycompany.lab_2;
  * @author daniel
  */
 public class Utilidades {
-    
+    private int id;
+
+    public int gererarID(){
+        id = (int) (Math.random() * 1000) + 1;
+        return id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

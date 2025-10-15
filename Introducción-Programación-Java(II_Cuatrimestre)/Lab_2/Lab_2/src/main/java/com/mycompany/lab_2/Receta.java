@@ -15,13 +15,14 @@ public class Receta {
     private Paciente paciente; //Se coloca cada variable con la clase correspondiente
     private Medico medico;
     private Medicamentos medicamento;
-    // final private String id;
+    private Utilidades id;
 
     //Set para Receta
     public void setReceta(){
         setPaciencte();
         setMedicamento();
         setMedico();
+        setId();
     }
 
     //Set para las variables
@@ -36,7 +37,7 @@ public class Receta {
         var agePaciente = pacienteageScanner.nextInt();
         //Scaner para el id
         Scanner pacienteidScanner = new Scanner(System.in);
-        System.out.print("Ingrese el id: ");
+        System.out.print("Ingrese el numero de cedula: ");
         String idPaciente = pacienteidScanner.next();
         //Creacion de la variable paciente
         paciente = new Paciente(namePaciente, agePaciente, idPaciente);
@@ -93,12 +94,32 @@ public class Receta {
         
     }
     public void setMedicamento(){
-        medicamento = new Medicamentos();
-        this.medicamento.setMedicamento();
+        System.out.println("--------Informacion de los medicamentos--------");
+        //nombre
+        Scanner nameScanner = new Scanner(System.in);
+        System.out.print("Ingrese el nombre del medicamento: ");
+        String name = nameScanner.next();
+
+        //La cantidad que debe ingerir
+        Scanner cantScanner = new Scanner(System.in);
+        System.out.print("Ingrese la cantidad que debe ingerir el paciente: ");
+        String cantidad = cantScanner.next();
+
+        //Cada cuanto tiempo el paciente tiene que ingerir el medicamento
+        Scanner timeScanner = new Scanner(System.in);
+        System.out.print("Ingrese cada cuanto tiempo el paciente tiene que ingerir el medicamento: ");
+        String time = timeScanner.next();
+        Medicamentos medicamento = new Medicamentos(name, cantidad, time);
+        this.medicamento = medicamento;
+    }
+    public void setId(){
+        Utilidades id = new Utilidades();
+        id.gererarID();
+        this.id = id;
     }
 
+
     //Get de Receta
-    //get Paciente
     public Paciente getPaciente(){
         return paciente;
     }
@@ -108,4 +129,8 @@ public class Receta {
     public Medicamentos getMedicamentos(){
         return medicamento;
     }
+    public Utilidades getId() {
+        return id;
+    }
+    
 }
