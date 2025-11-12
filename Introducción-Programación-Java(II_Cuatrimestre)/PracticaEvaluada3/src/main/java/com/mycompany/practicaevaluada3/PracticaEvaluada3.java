@@ -8,7 +8,6 @@ public class PracticaEvaluada3 {
     public static void main(String[] args) {
         //Ejercicio 1 – Arreglo Unidimensional
         Scanner scanner = new Scanner(System.in);
-        /* 
         System.out.print("Ingrese el tamaño del arreglo: ");
         int tamaño = scanner.nextInt();
         Temperatura[] arrTemperaturas = new Temperatura[tamaño];
@@ -88,7 +87,7 @@ public class PracticaEvaluada3 {
             System.out.println("Condición del Clima: " + arrTemperaturas[i].getCondicionClima());
             System.out.println("-------------------------------");
         }
-            */
+    
         //Ejercicio 2 – Matriz Bidimensional
         System.out.println("------Matriz---------");
         System.out.print("Ingrese el número de filas de la matriz: ");
