@@ -22,6 +22,7 @@ public class ParametroReferencia {
         this.rangoHigh = rangoHigh;
         this.rangoLow = rangoLow;
     }
+    public ParametroReferencia(){}
     
     //Getters
     public String getNombre() {

@@ -18,6 +18,7 @@ public class ResultadoParametro {
         this.parametro = parametro;
         this.valor = valor;
     }
+    public ResultadoParametro(){}
 
     //Getters y Setters
     public ParametroReferencia getParametro() {

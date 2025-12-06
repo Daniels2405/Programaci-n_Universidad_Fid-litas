@@ -168,8 +168,6 @@ public class SistemaLaboratorio {
             String segundoApellido = scanner.next();
             System.out.print("Ingrese la edad del paciente: ");
             int edad = scanner.nextInt();
-            System.out.print("Ingrese la fecha de nacimiento del paciente (DD/MM/AAAA): ");
-            String fechaNacimento = scanner.next();
             System.out.print("Ingrese el sexo del paciente (M/F): ");
             char sexo = scanner.next().charAt(0);
             System.out.print("Ingrese el teléfono del paciente: ");
@@ -180,7 +178,7 @@ public class SistemaLaboratorio {
             String direccion = scanner.next();
 
             Paciente nuevoPaciente = new Paciente(cedula, nombre, primerApellido, segundoApellido,
-                                                    edad, fechaNacimento, sexo, telefono, correoElectronico,
+                                                    edad, sexo, telefono, correoElectronico,
                                                     direccion);
             this.setPacientes(nuevoPaciente);
             System.out.println("Paciente registrado exitosamente.");
@@ -196,36 +194,60 @@ public class SistemaLaboratorio {
     //--Consulta de pacientes--
     public void consultarPaciente(){
         Scanner scanner = new Scanner(System.in);
-        boolean encontrado = false;
+        
+        // Validar que existan pacientes
+        boolean existePaciente = false;
+        for (int i = 0; i < this.pacientes.length; i++) {
+            if (this.pacientes[i] != null) {
+                existePaciente = true;
+                break;
+            }
+        }
+        if (!existePaciente) {
+            System.out.println("No hay pacientes registrados en el sistema. Debe registrar un paciente primero para poder consultarlo.");
+            return;
+        }
+        
         boolean repetir = true;
         while (repetir) {
+            System.out.print("Ingrese la cédula del paciente a consultar (0 para salir): ");
+            int cedulaConsulta = scanner.nextInt();
+            
+            // Opción para salir
+            if (cedulaConsulta == 0) {
+                System.out.println("Saliendo de consulta de pacientes.");
+                repetir = false;
+                continue;
+            }
+            
+            // Buscar el paciente por cédula
+            Paciente pacienteEncontrado = null;
             for (int i = 0; i < pacientes.length; i++) {
-                while (!encontrado || repetir) {
-                    System.out.print("Ingrese la cédula del paciente a consultar: ");
-                    int cedulaConsulta = scanner.nextInt();
-                    if (pacientes[i] != null && pacientes[i].getCedula() == cedulaConsulta) {
-                        System.out.println("Información del paciente:");
-                        System.out.println("Cédula: " + pacientes[i].getCedula());
-                        System.out.println("Nombre: " + pacientes[i].getNombre());
-                        System.out.println("Primer Apellido: " + pacientes[i].getApellido1());
-                        System.out.println("Segundo Apellido: " + pacientes[i].getApellido2());
-                        System.out.println("Edad: " + pacientes[i].getEdad());
-                        System.out.println("Fecha de Nacimiento: " + pacientes[i].getFechaNacimento());
-                        System.out.println("Sexo: " + pacientes[i].getSexo());
-                        System.out.println("Teléfono: " + pacientes[i].getTelefono());
-                        System.out.println("Correo Electrónico: " + pacientes[i].getCorreoElectronico());
-                        System.out.println("Dirección: " + pacientes[i].getDireccion());
-                        encontrado = true;
-                    } else {
-                        System.out.println("Paciente no encontrado. Intente nuevamente.");
-                    }
+                if (pacientes[i] != null && pacientes[i].getCedula() == cedulaConsulta) {
+                    pacienteEncontrado = pacientes[i];
+                    break;
                 }
             }
+            
+            if (pacienteEncontrado != null) {
+                System.out.println("\n--- Información del Paciente ---");
+                System.out.println("Cédula: " + pacienteEncontrado.getCedula());
+                System.out.println("Nombre: " + pacienteEncontrado.getNombre());
+                System.out.println("Primer Apellido: " + pacienteEncontrado.getApellido1());
+                System.out.println("Segundo Apellido: " + pacienteEncontrado.getApellido2());
+                System.out.println("Edad: " + pacienteEncontrado.getEdad());
+                System.out.println("Sexo: " + pacienteEncontrado.getSexo());
+                System.out.println("Teléfono: " + pacienteEncontrado.getTelefono());
+                System.out.println("Correo Electrónico: " + pacienteEncontrado.getCorreoElectronico());
+                System.out.println("Dirección: " + pacienteEncontrado.getDireccion());
+                System.out.println("--------------------------------\n");
+            } else {
+                System.out.println("Paciente con cédula " + cedulaConsulta + " no encontrado.\n");
+            }
+            
             System.out.print("¿Desea consultar otro paciente? (s/n): ");
             char opcion = scanner.next().charAt(0);
-            if (opcion == 's' || opcion == 'S') {
-                encontrado = false; 
-            } else {
+            if (opcion != 's' && opcion != 'S') {
                 repetir = false;
             }
         }
@@ -265,6 +287,20 @@ public class SistemaLaboratorio {
      */
     public void modificarPaciente(){
         Scanner scanner = new Scanner(System.in);
+        
+        // Validar que existan pacientes
+        boolean existePaciente = false;
+        for (int i = 0; i < this.pacientes.length; i++) {
+            if (this.pacientes[i] != null) {
+                existePaciente = true;
+                break;
+            }
+        }
+        if (!existePaciente) {
+            System.out.println("No hay pacientes registrados en el sistema. Debe registrar un paciente primero para poder modificarlo.");
+            return;
+        }
+        
         System.out.print("Ingrese la cédula del paciente a modificar: ");
         int cedula = scanner.nextInt();
         int indice = -1;
@@ -275,22 +311,21 @@ public class SistemaLaboratorio {
             }
         }
         if (indice == -1){
-            System.out.println("Paciente no encontrado.");
+            System.out.println("Paciente con cédula " + cedula + " no encontrado.");
             return;
         }
         Paciente p = this.pacientes[indice];
         boolean salir = false;
         while (!salir){
-            System.out.println("Paciente: " + p.getNombre() + " " + p.getApellido1());
+            System.out.println("--- Modificar Paciente: " + p.getNombre() + " " + p.getApellido1() + " ---");
             System.out.println("1. Nombre");
             System.out.println("2. Primer apellido");
             System.out.println("3. Segundo apellido");
             System.out.println("4. Edad");
-            System.out.println("5. Fecha de nacimiento");
-            System.out.println("6. Sexo");
-            System.out.println("7. Teléfono");
-            System.out.println("8. Correo electrónico");
-            System.out.println("9. Dirección");
+            System.out.println("5. Sexo");
+            System.out.println("6. Teléfono");
+            System.out.println("7. Correo electrónico");
+            System.out.println("8. Dirección");
             System.out.println("0. Salir");
             System.out.print("Seleccione el atributo a modificar: ");
             int opcion = scanner.nextInt();
@@ -317,26 +352,21 @@ public class SistemaLaboratorio {
                     System.out.println("Edad actualizada.");
                     break;
                 case 5:
-                    System.out.print("Nueva fecha de nacimiento (DD/MM/AAAA): ");
-                    p.setFechaNacimento(scanner.nextLine());
-                    System.out.println("Fecha de nacimiento actualizada.");
-                    break;
-                case 6:
                     System.out.print("Nuevo sexo (M/F): ");
                     p.setSexo(scanner.next().charAt(0));
                     System.out.println("Sexo actualizado.");
                     break;
-                case 7:
+                case 6:
                     System.out.print("Nuevo teléfono: ");
                     p.setTelefono(scanner.next());
                     System.out.println("Teléfono actualizado.");
                     break;
-                case 8:
+                case 7:
                     System.out.print("Nuevo correo electrónico: ");
                     p.setCorreoElectronico(scanner.next());
                     System.out.println("Correo actualizado.");
                     break;
-                case 9:
+                case 8:
                     System.out.print("Nueva dirección: ");
                     scanner.nextLine();
                     p.setDireccion(scanner.nextLine());
@@ -344,6 +374,7 @@ public class SistemaLaboratorio {
                     break;
                 case 0:
                     salir = true;
+                    System.out.println("Saliendo de modificación de paciente.");
                     break;
                 default:
                     System.out.println("Opción no válida.");
@@ -354,6 +385,20 @@ public class SistemaLaboratorio {
     // Eliminar paciente, de igual forma que lo anterior con el numero de cedula
     public void eliminarPaciente(){
         Scanner scanner = new Scanner(System.in);
+        
+        // Validar que existan pacientes
+        boolean existePaciente = false;
+        for (int i = 0; i < this.pacientes.length; i++) {
+            if (this.pacientes[i] != null) {
+                existePaciente = true;
+                break;
+            }
+        }
+        if (!existePaciente) {
+            System.out.println("No hay pacientes registrados en el sistema. Debe registrar un paciente primero para poder eliminarlo.");
+            return;
+        }
+        
         System.out.print("Ingrese la cédula del paciente a eliminar: ");
         int cedula = scanner.nextInt();
         int indice = -1;
@@ -364,11 +409,17 @@ public class SistemaLaboratorio {
             }
         }
         if (indice == -1){
-            System.out.println("Paciente no encontrado.");
+            System.out.println("Paciente con cédula " + cedula + " no encontrado.");
             return;
         }
-        this.pacientes[indice] = null;
-        System.out.println("Paciente eliminado correctamente.");
+        System.out.println("¿Está seguro de que desea eliminar al paciente " + this.pacientes[indice].getNombre() + " " + this.pacientes[indice].getApellido1() + "? (s/n): ");
+        char confirmacion = scanner.next().charAt(0);
+        if (confirmacion == 's' || confirmacion == 'S') {
+            this.pacientes[indice] = null;
+            System.out.println("Paciente eliminado correctamente.");
+        } else {
+            System.out.println("Eliminación cancelada.");
+        }
     }
     //* ------------------------------Crear ordenes de prueba de Hematologia-----------------------------------------------
     /*

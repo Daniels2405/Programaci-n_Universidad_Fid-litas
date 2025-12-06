@@ -25,14 +25,13 @@ public class Paciente {
 
     //Constructor
     public Paciente(int cedula, String nombre, String apellido1, String apellido2, 
-                    int edad, String fechaNacimento, char sexo, String Telefono, 
+                    int edad, char sexo, String Telefono, 
                     String correoElectronico, String direccion) { //No se colocan las pruebas y orden en el constructor
         this.cedula = cedula;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.edad = edad;
-        this.fechaNacimento = fechaNacimento;
         this.sexo = sexo;
         this.Telefono = Telefono;
         this.correoElectronico = correoElectronico;
