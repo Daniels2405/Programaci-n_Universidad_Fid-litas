@@ -54,8 +54,11 @@ public class Empleado {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public String[] getApellidos() {
-        return apellidos;
+    public String getApellido1() {
+        return apellidos[0];
+    }
+    public String getApellido2() {
+        return apellidos[1];
     }
     public void setApellidos(String[] apellidos) {
         this.apellidos = apellidos;

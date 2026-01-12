@@ -64,7 +64,7 @@ public class Gestion_Empleados {
             if (empleados[i] != null){
                 System.out.println("Empleado ID: " + empleados[i].getIdEmpleado());
                 System.out.println("Nombre: " + empleados[i].getNombre());
-                System.out.println("Apellidos: " + String.join(" ", empleados[i].getApellidos()));
+                System.out.println("Apellidos: " + empleados[i].getApellido1() + " " + empleados[i].getApellido2());
                 System.out.println("Cédula: " + empleados[i].getCedula());
                 System.out.println("Edad: " + empleados[i].getEdad());
                 System.out.println("Puesto: " + empleados[i].getPuesto());
@@ -90,7 +90,7 @@ public class Gestion_Empleados {
             if (empleados[i] != null && empleados[i].getIdEmpleado() == idEmpleado) {
                 System.out.println("Empleado ID: " + empleados[i].getIdEmpleado());
                 System.out.println("Nombre: " + empleados[i].getNombre());
-                System.out.println("Apellidos: " + String.join(" ", empleados[i].getApellidos()));
+                System.out.println("Apellidos: " + empleados[i].getApellido1() + " " + empleados[i].getApellido2());
                 System.out.println("Cédula: " + empleados[i].getCedula());
                 System.out.println("Edad: " + empleados[i].getEdad());
                 System.out.println("Puesto: " + empleados[i].getPuesto());
