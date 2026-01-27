@@ -4,7 +4,6 @@
  */
 package com.mycompany.clase01;
 
-import javax.swing.JFrame;
 import java.sql.Date;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -33,10 +33,15 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
     private JTextField txtMenbresia;
     private JTextField txtPuntos;
     private JTextField txtLimiteCredito;
+    
+    private Direccion direccionActual;
 
     private JButton btnRegistrar;
+    private JButton btnAgregarDireccion;
     private DefaultTableModel modeloTabla;
     private JTable tablaClientes;
+
+    
 
     public RegistroClientesGUI() {
         //Configuracion de la ventana
@@ -112,6 +117,14 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         btnRegistrar.addActionListener(this);
         panelPrincipal.add(btnRegistrar);
 
+        panelPrincipal.add(new JSeparator(SwingConstants.HORIZONTAL));
+        panelPrincipal.add(new JSeparator(SwingConstants.HORIZONTAL)); 
+
+        //Boton de Agregar Direccion
+        btnAgregarDireccion = new JButton("Agregar Dirección");
+        btnAgregarDireccion.addActionListener(this);
+        panelPrincipal.add(btnAgregarDireccion);
+
         //tabla clientes
         String [] columnas = {"ID Persona", "Nombre Completo", "Género", "Fecha Nacimiento",
                              "ID Cliente", "Membresía", "Puntos", "Límite Crédito"};  //Encabezados de la tabla
@@ -120,7 +133,7 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         tablaClientes = new JTable(modeloTabla);
         tablaClientes.setBackground(Color.DARK_GRAY);
         tablaClientes.setForeground (Color.WHITE);
-        tablaClientes.setRowHeight(25);
+        tablaClientes.setRowHeight(14);
         tablaClientes.setGridColor(Color.LIGHT_GRAY);
         tablaClientes.setShowVerticalLines(false);
 
@@ -153,7 +166,77 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Logica del boton
         if (e.getSource() == btnRegistrar) {
-
+            guardarClientes();
+            limpiarCampos();
         }
+        if (e.getSource() == btnAgregarDireccion){
+            //Constructor de una nueva ventana para direccion
+            agregarDireccionGui();
+            JOptionPane.showMessageDialog(null, "Funcionalidad en desarrollo", "Agregar Dirección", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void limpiarCampos() {
+        txtidPersona.setText("");
+        txtnombreCompleto.setText("");
+        txtFechaNacimiento.setText("");
+        cmGenero.setSelectedIndex(0);
+        txtidCliente.setText("");
+        txtMenbresia.setText("");
+        txtPuntos.setText("");
+        txtLimiteCredito.setText("");
+    }
+    
+    private void guardarClientes(){
+        ArrayList<Cliente> clientes = new ArrayList<>();
+
+        //Obtener los datos
+        String idPersona = txtidPersona.getText();
+        String nombreCompleto = txtnombreCompleto.getText();
+        Date fechaNacimiento = Date.valueOf(txtFechaNacimiento.getText());
+        String genero = ((Genero) cmGenero.getSelectedItem()).toString();
+
+        //Obtener datos de cliente
+        int idCliente = Integer.parseInt (txtidCliente.getText());
+        String membresia = txtMenbresia.getText();
+        int puntos = Integer.parseInt (txtPuntos.getText());
+        double limiteCredito = Double.parseDouble (txtLimiteCredito.getText());
+
+
+        //Construir el objeto
+        Direccion direccionCliente = new Direccion();
+        Cliente nuevoCliente = new Cliente();
+        nuevoCliente.setIdPersona(idPersona);
+        nuevoCliente.setNombreCompleto(nombreCompleto);
+        nuevoCliente.setGenero(genero);
+        nuevoCliente.setFechaNacimiento(fechaNacimiento);
+        nuevoCliente.setIdCliente(idCliente);
+        nuevoCliente.setMembresia(membresia);
+        nuevoCliente.setPuntos(puntos);
+        nuevoCliente.setLimiteCredito(limiteCredito);
+        nuevoCliente.setDireccion(direccionCliente);
+        clientes.add(nuevoCliente); //Agrega a la lista
+
+        //Agregar a la tabla
+
+        modeloTabla.addRow(new Object[]{
+            idPersona,
+            nombreCompleto,
+            genero,
+            fechaNacimiento.toString(),
+            idCliente,
+            membresia,
+            puntos,
+            limiteCredito
+        });
+
+        JOptionPane.showMessageDialog(null, "Cliente Registrado Correctamente", "Formulario de clientes", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void agregarDireccionGui(){
+        SwingUtilities.invokeLater(() -> { new RegistroDireccionGui();});
+        //RegistroDireccionGui direccionGui = new RegistroDireccionGui();
+        //direccionGui.setVisible(true);
+        
     }
 }

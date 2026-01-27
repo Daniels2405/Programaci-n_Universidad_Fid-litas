@@ -9,6 +9,7 @@ package com.mycompany.clase01;
  * @author daniel-2405
  */
 public enum Genero {
+    Seleccione_Genero,
     Masculino, 
     Femenino,
     Otro

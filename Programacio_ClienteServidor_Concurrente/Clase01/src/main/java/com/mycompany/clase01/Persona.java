@@ -22,6 +22,7 @@ public class Persona {
         this.genero = genero;
         this.fechaNacimiento = fechaNacimiento;
     }
+    public Persona(){}
 
     public String getIdPersona() {
         return idPersona;
