@@ -46,7 +46,7 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
     public RegistroClientesGUI() {
         //Configuracion de la ventana
         super("Formulario de Registro Clientes");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(10,10));
         getContentPane().setBackground(Color.WHITE);
 
@@ -162,30 +162,17 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         setVisible(true);
         }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        //Logica del boton
-        if (e.getSource() == btnRegistrar) {
-            guardarClientes();
-            limpiarCampos();
+        
+        private void limpiarCampos() {
+            txtidPersona.setText("");
+            txtnombreCompleto.setText("");
+            txtFechaNacimiento.setText("");
+            cmGenero.setSelectedIndex(0);
+            txtidCliente.setText("");
+            txtMenbresia.setText("");
+            txtPuntos.setText("");
+            txtLimiteCredito.setText("");
         }
-        if (e.getSource() == btnAgregarDireccion){
-            //Constructor de una nueva ventana para direccion
-            agregarDireccionGui();
-            JOptionPane.showMessageDialog(null, "Funcionalidad en desarrollo", "Agregar Dirección", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
-    private void limpiarCampos() {
-        txtidPersona.setText("");
-        txtnombreCompleto.setText("");
-        txtFechaNacimiento.setText("");
-        cmGenero.setSelectedIndex(0);
-        txtidCliente.setText("");
-        txtMenbresia.setText("");
-        txtPuntos.setText("");
-        txtLimiteCredito.setText("");
-    }
     
     private void guardarClientes(){
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -201,8 +188,8 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         String membresia = txtMenbresia.getText();
         int puntos = Integer.parseInt (txtPuntos.getText());
         double limiteCredito = Double.parseDouble (txtLimiteCredito.getText());
-
-
+        
+        
         //Construir el objeto
         Direccion direccionCliente = new Direccion();
         Cliente nuevoCliente = new Cliente();
@@ -216,9 +203,9 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         nuevoCliente.setLimiteCredito(limiteCredito);
         nuevoCliente.setDireccion(direccionCliente);
         clientes.add(nuevoCliente); //Agrega a la lista
-
+        
         //Agregar a la tabla
-
+        
         modeloTabla.addRow(new Object[]{
             idPersona,
             nombreCompleto,
@@ -232,11 +219,26 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
 
         JOptionPane.showMessageDialog(null, "Cliente Registrado Correctamente", "Formulario de clientes", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
     public void agregarDireccionGui(){
         SwingUtilities.invokeLater(() -> { new RegistroDireccionGui();});
         //RegistroDireccionGui direccionGui = new RegistroDireccionGui();
         //direccionGui.setVisible(true);
         
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        //Logica del boton
+        if (e.getSource() == btnRegistrar) {
+            guardarClientes();
+            limpiarCampos();
+        }
+
+        if (e.getSource() == btnAgregarDireccion){
+            //Constructor de una nueva ventana para direccion
+            //agregarDireccionGui();
+            JOptionPane.showMessageDialog(null, "Funcionalidad en desarrollo", "Agregar Dirección", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

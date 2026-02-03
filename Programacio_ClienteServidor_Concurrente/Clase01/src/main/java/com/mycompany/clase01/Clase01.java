@@ -14,6 +14,6 @@ public class Clase01 {
     private static final int MAXPERSONA = 30;
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> { new RegistroClientesGUI(); });
+        SwingUtilities.invokeLater(() -> { new PantallaPrincipal().setVisible(true); });
     }
 }
