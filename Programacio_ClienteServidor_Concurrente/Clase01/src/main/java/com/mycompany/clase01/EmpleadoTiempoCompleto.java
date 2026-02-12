@@ -6,6 +6,8 @@ package com.mycompany.clase01;
 
 import java.sql.Date;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author daniel-2405
@@ -48,7 +50,7 @@ public class EmpleadoTiempoCompleto extends Empleado implements Bonificacion {
     }
     
     @Override
-    public double calcularSalario() {
+    public double calcularSalario() throws SalarioException {
         double valorHora = 0;
         double salarioNeto = 0;
         double cargasSociales = 0;
@@ -57,11 +59,15 @@ public class EmpleadoTiempoCompleto extends Empleado implements Bonificacion {
         double salarioMes = 0;
 
         if (this.cantidadHorasExtra > 0) {
-            valorHora = this.salarioBase / HORAS_BASE;
+            valorHora = super.getSalarioBase() / HORAS_BASE;
             salarioExtra = valorHora * this.cantidadHorasExtra;
         }
         salarioMes = super.getSalarioBase() + salarioExtra;
-        bono = calcularBono(salarioMes);
+        try{
+            bono = calcularBono(salarioMes);
+        } catch (SalarioException e){
+            throw new SalarioException("Error: " + e.getMessage());
+        }
         salarioMes += bono; 
         cargasSociales = salarioMes * PORCENTAJE_CARGAS;
         salarioNeto = salarioMes - cargasSociales;
@@ -69,7 +75,14 @@ public class EmpleadoTiempoCompleto extends Empleado implements Bonificacion {
     }
 
     @Override
-    public double calcularBono(double salarioBase) {
+    public double calcularBono(double salarioBase) throws SalarioException{
+        if(this.porcentajeBono <= 0){
+            throw new SalarioException("El porcentaje de bono debe ser mayor a cero.");
+        }
+        if(salarioBase <= 0){
+            throw new SalarioException("El salario debe ser mayor a cero.");
+        }
+
         return salarioBase * this.porcentajeBono;
     }
 

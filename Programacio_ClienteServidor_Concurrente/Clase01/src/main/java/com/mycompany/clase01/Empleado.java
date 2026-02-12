@@ -49,7 +49,7 @@ public abstract class Empleado extends Persona{
     }
 
     
-    public abstract double calcularSalario();
+    public abstract double calcularSalario() throws SalarioException;
 
     
 }

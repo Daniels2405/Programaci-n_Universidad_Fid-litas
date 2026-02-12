@@ -9,5 +9,5 @@ package com.mycompany.clase01;
  * @author daniel-2405
  */
 public interface Bonificacion {
-    public double calcularBono(double salarioBase);
+    public double calcularBono(double salarioBase) throws SalarioException;
 }

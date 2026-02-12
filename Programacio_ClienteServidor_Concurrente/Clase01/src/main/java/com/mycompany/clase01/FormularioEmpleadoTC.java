@@ -26,7 +26,7 @@ public class FormularioEmpleadoTC extends JFrame implements ActionListener{
     //empleado
     private JTextField txtnumEmpleado, txtDepartamento, txtSalarioBase;
     //empleado tiempo completo
-    private JTextField txtPorcentajeBono, txtCantidadHorasExtra;
+    private JTextField txtPorcentajeBono, txtCantidadHorasExtra, txtSalarioNeto;
     //tabla
     private JTable tablaEmpleadosTC;
     private DefaultTableModel modeloTabla;
@@ -100,18 +100,21 @@ public class FormularioEmpleadoTC extends JFrame implements ActionListener{
         panelPrincipal.add(lblCantidadHorasExtra);
         txtCantidadHorasExtra = new JTextField(20);
         panelPrincipal.add(txtCantidadHorasExtra);
+        
+        panelPrincipal.add(new JLabel("Salario Neto:"));
+        txtSalarioNeto = new JTextField(30);
+        panelPrincipal.add(txtSalarioNeto);
 
         panelPrincipal.add(new JSeparator(SwingConstants.HORIZONTAL));
         panelPrincipal.add(new JSeparator(SwingConstants.HORIZONTAL)); 
 
-		//Botones
-		btnRegistrar = new JButton("Registrar Empleado TC");
+	//Botones
+	btnRegistrar = new JButton("Registrar Empleado TC");
         btnRegistrar.addActionListener(this);
-        panelPrincipal.add(btnRegistrar);
-
         btnCalcularSalario = new JButton("Calcular Salario");
         btnCalcularSalario.addActionListener(this);
         panelPrincipal.add(btnCalcularSalario);
+        panelPrincipal.add(btnRegistrar);
 
         //Tabla de Empleados TC
         String [] columnas = {"ID Persona", "Nombre Completo", "Género", "Fecha Nacimiento",
@@ -160,9 +163,8 @@ public class FormularioEmpleadoTC extends JFrame implements ActionListener{
         txtCantidadHorasExtra.setText("");
         }
 
-    public void registrarEmpleado() {
-        ArrayList<EmpleadoTiempoCompleto> empleadosTC = new ArrayList<>();
-
+    public EmpleadoTiempoCompleto construirEmpleado(){
+        EmpleadoTiempoCompleto empleadoTC = new EmpleadoTiempoCompleto();
         String idPersona = txtidPersona.getText();
         String nombreCompleto = txtnombreCompleto.getText();
         Date fechaNacimiento = Date.valueOf(txtFechaNacimiento.getText());
@@ -173,9 +175,7 @@ public class FormularioEmpleadoTC extends JFrame implements ActionListener{
         double salarioBase = Double.parseDouble(txtSalarioBase.getText());
         double porcentajeBono = Double.parseDouble(txtPorcentajeBono.getText());
         int cantidadHorasExtra = Integer.parseInt(txtCantidadHorasExtra.getText());
-
-        EmpleadoTiempoCompleto empleadoTC = new EmpleadoTiempoCompleto();
-
+        
         empleadoTC.setIdPersona(idPersona);
         empleadoTC.setNombreCompleto(nombreCompleto);
         empleadoTC.setFechaNacimiento(fechaNacimiento);
@@ -185,26 +185,45 @@ public class FormularioEmpleadoTC extends JFrame implements ActionListener{
         empleadoTC.setSalarioBase(salarioBase);
         empleadoTC.setPorcentajeBono(porcentajeBono);
         empleadoTC.setCantidadHorasExtra(cantidadHorasExtra);
-        empleadosTC.add(empleadoTC);
-
-        modeloTabla.addRow(new Object[]{
-            empleadoTC.getIdPersona(),
-            empleadoTC.getNombreCompleto(),
-            empleadoTC.getGenero(),
-            empleadoTC.getFechaNacimiento(),
-            empleadoTC.getNumEmpleado(),
-            empleadoTC.getDepartamento(),
-            empleadoTC.getSalarioBase(),
-            empleadoTC.getPorcentajeBono(),
-            empleadoTC.getCantidadHorasExtra(),
-            //empleadoTC.calcularSalarioTotal()
-        });
-        JOptionPane.showMessageDialog(null, "Empleado Registrado Correctamente", "Formulario de Empleados", JOptionPane.INFORMATION_MESSAGE);
+        return empleadoTC;
+    }
+    public void registrarEmpleado() {
+        try{
+            EmpleadoTiempoCompleto empleadoTC = construirEmpleado();
+            Double salarioNeto = empleadoTC.calcularSalario();
+            
+            modeloTabla.addRow(new Object[]{
+                empleadoTC.getIdPersona(),
+                empleadoTC.getNombreCompleto(),
+                empleadoTC.getGenero(),
+                empleadoTC.getFechaNacimiento(),
+                empleadoTC.getNumEmpleado(),
+                empleadoTC.getDepartamento(),
+                empleadoTC.getSalarioBase(),
+                empleadoTC.getPorcentajeBono(),
+                empleadoTC.getCantidadHorasExtra(),
+                salarioNeto
+            });
+            JOptionPane.showMessageDialog(null, "Empleado Registrado Correctamente", "Formulario de Empleados", JOptionPane.INFORMATION_MESSAGE);
+        } catch(SalarioException e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error registrar empleado Tiempo Completo", JOptionPane.ERROR_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error registrar empleado Tiempo Completo", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
     public void calcularSalario() {
+        try{
+            EmpleadoTiempoCompleto emp = construirEmpleado();
+            Double salarioNeto = emp.calcularSalario();
+            txtSalarioNeto.setText(String.valueOf(salarioNeto));
+        }catch(SalarioException e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error Calcular Salario", JOptionPane.ERROR_MESSAGE);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error Calcular Salario", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnRegistrar) {
