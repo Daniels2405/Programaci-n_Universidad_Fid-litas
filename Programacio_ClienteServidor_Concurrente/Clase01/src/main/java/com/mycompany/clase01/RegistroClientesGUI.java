@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.*;
 
 
 /**
@@ -22,6 +22,8 @@ import java.util.List;
  * @author daniel-2405
  */
 public class RegistroClientesGUI extends JFrame implements ActionListener{
+    private ArrayList<Cliente> clientes = new ArrayList<>();
+    private static final String ARCHIVO_CLIENTES = "clientes.bin";
     //Componentes de Persona
     private JTextField txtidPersona;
     private JTextField txtnombreCompleto;
@@ -141,6 +143,8 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         tablaClientes.getTableHeader().setForeground(Color.WHITE);
         tablaClientes.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
 
+        listenerTable();
+
         //Se hace un scroll para la tabla
         JScrollPane scrollPane = new JScrollPane(tablaClientes);
         scrollPane.setPreferredSize(new Dimension(800, 200));
@@ -160,6 +164,11 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+        try {
+            cargarClientes(ARCHIVO_CLIENTES);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Formulario de clientes", JOptionPane.ERROR_MESSAGE);
+        }
         }
 
         
@@ -175,49 +184,53 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
         }
     
     private void guardarClientes(){
-        ArrayList<Cliente> clientes = new ArrayList<>();
+        try {
+            //Obtener los datos
+            String idPersona = txtidPersona.getText();
+            String nombreCompleto = txtnombreCompleto.getText();
+            Date fechaNacimiento = Date.valueOf(txtFechaNacimiento.getText());
+            String genero = ((Genero) cmGenero.getSelectedItem()).toString();
 
-        //Obtener los datos
-        String idPersona = txtidPersona.getText();
-        String nombreCompleto = txtnombreCompleto.getText();
-        Date fechaNacimiento = Date.valueOf(txtFechaNacimiento.getText());
-        String genero = ((Genero) cmGenero.getSelectedItem()).toString();
-
-        //Obtener datos de cliente
-        int idCliente = Integer.parseInt (txtidCliente.getText());
-        String membresia = txtMenbresia.getText();
-        int puntos = Integer.parseInt (txtPuntos.getText());
-        double limiteCredito = Double.parseDouble (txtLimiteCredito.getText());
-        
-        
-        //Construir el objeto
-        Direccion direccionCliente = new Direccion();
-        Cliente nuevoCliente = new Cliente();
-        nuevoCliente.setIdPersona(idPersona);
-        nuevoCliente.setNombreCompleto(nombreCompleto);
-        nuevoCliente.setGenero(genero);
-        nuevoCliente.setFechaNacimiento(fechaNacimiento);
-        nuevoCliente.setIdCliente(idCliente);
-        nuevoCliente.setMembresia(membresia);
-        nuevoCliente.setPuntos(puntos);
-        nuevoCliente.setLimiteCredito(limiteCredito);
-        nuevoCliente.setDireccion(direccionCliente);
-        clientes.add(nuevoCliente); //Agrega a la lista
-        
-        //Agregar a la tabla
-        
-        modeloTabla.addRow(new Object[]{
-            idPersona,
-            nombreCompleto,
-            genero,
-            fechaNacimiento.toString(),
-            idCliente,
-            membresia,
-            puntos,
-            limiteCredito
-        });
-
-        JOptionPane.showMessageDialog(null, "Cliente Registrado Correctamente", "Formulario de clientes", JOptionPane.INFORMATION_MESSAGE);
+            //Obtener datos de cliente
+            int idCliente = Integer.parseInt (txtidCliente.getText());
+            String membresia = txtMenbresia.getText();
+            int puntos = Integer.parseInt (txtPuntos.getText());
+            double limiteCredito = Double.parseDouble (txtLimiteCredito.getText());
+            
+            
+            //Construir el objeto
+            Direccion direccionCliente = new Direccion();
+            Cliente nuevoCliente = new Cliente();
+            nuevoCliente.setIdPersona(idPersona);
+            nuevoCliente.setNombreCompleto(nombreCompleto);
+            nuevoCliente.setGenero(genero);
+            nuevoCliente.setFechaNacimiento(fechaNacimiento);
+            nuevoCliente.setIdCliente(idCliente);
+            nuevoCliente.setMembresia(membresia);
+            nuevoCliente.setPuntos(puntos);
+            nuevoCliente.setLimiteCredito(limiteCredito);
+            nuevoCliente.setDireccion(direccionCliente);
+            clientes.add(nuevoCliente); //Agrega a la lista
+            
+            //Agregar a la tabla
+            
+            modeloTabla.addRow(new Object[]{
+                idPersona,
+                nombreCompleto,
+                genero,
+                fechaNacimiento.toString(),
+                idCliente,
+                membresia,
+                puntos,
+                limiteCredito
+            });
+            guardarClientes(ARCHIVO_CLIENTES, clientes);
+            JOptionPane.showMessageDialog(null, "Cliente Registrado Correctamente", "Formulario de clientes", JOptionPane.INFORMATION_MESSAGE);
+        } catch (FileException e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Formulario de clientes", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Formulario de clientes", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void agregarDireccionGui(){
@@ -239,6 +252,106 @@ public class RegistroClientesGUI extends JFrame implements ActionListener{
             //Constructor de una nueva ventana para direccion
             //agregarDireccionGui();
             JOptionPane.showMessageDialog(null, "Funcionalidad en desarrollo", "Agregar Dirección", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private static void guardarClientes(String NombreArchivo, List<Cliente> pClientes) throws FileException{
+        try(ObjectOutputStream objSalida = new ObjectOutputStream(new FileOutputStream(NombreArchivo))){
+            objSalida.writeObject(pClientes);
+        } catch (IOException ex){
+            throw new FileException(ex.getMessage());
+        }
+    }
+
+    private void cargarClientes(String NombreArchivo) throws FileException{
+        try (ObjectInputStream objEntrada = new ObjectInputStream(new FileInputStream(NombreArchivo))){
+            List<Cliente> clientesExistentes = (List<Cliente>) objEntrada.readObject();
+
+            for(Cliente registro : clientesExistentes){
+                modeloTabla.addRow(new Object[]{
+                    registro.getIdPersona(),
+                    registro.getNombreCompleto(),
+                    registro.getGenero(),
+                    registro.getFechaNacimiento(),
+                    registro.getIdCliente(),
+                    registro.getMembresia(),
+                    registro.getPuntos(),
+                    registro.getLimiteCredito(),
+                });
+            }
+
+            clientes.addAll(clientesExistentes);
+
+        } catch (IOException ex) {
+            throw new FileException(ex.getMessage());
+        } catch (ClassNotFoundException ex){
+            throw new FileException(ex.getMessage());
+        }
+    }
+
+    private void ordenarPorIdCliente(List<Cliente> pClientes){
+        pClientes.sort(null); //Se le dice que use el compareTo de la clase Cliente
+        actualizarTabla(pClientes);
+    }
+
+    private void ordenarPorNombre(List<Cliente> pClientes){
+        pClientes.sort(new ComparatorCliente.ComparadorPorNombre()); 
+        actualizarTabla(pClientes);
+    }
+
+    private void ordenarPorPuntos(List<Cliente> pClientes){
+        pClientes.sort(new ComparatorCliente.ComparadorPorPuntos()); 
+        actualizarTabla(pClientes);
+    }
+
+    private void ordenarPorLimite(List<Cliente> pClientes){
+        pClientes.sort(new ComparatorCliente.ComparadorPorLimite()); 
+        actualizarTabla(pClientes);
+    }
+
+    private void actualizarTabla(List<Cliente> pClientes){
+        modeloTabla.setRowCount(0);
+        for(Cliente registro : pClientes){
+            modeloTabla.addRow(new Object[]{
+                registro.getIdPersona(),
+                registro.getNombreCompleto(),
+                registro.getGenero(),
+                registro.getFechaNacimiento(),
+                registro.getIdCliente(),
+                registro.getMembresia(),
+                registro.getPuntos(),
+                registro.getLimiteCredito(),
+            });
+        }
+    }
+
+    private void listenerTable(){
+        tablaClientes.getTableHeader().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt){
+                int col = tablaClientes.columnAtPoint(evt.getPoint());
+                String nombreColumna = tablaClientes.getColumnName(col);
+                ordenarColumna(nombreColumna);
+            }
+        });
+    }
+
+    private void ordenarColumna(String nombreColumna){
+        switch (nombreColumna) {
+            case "Nombre Completo":
+                ordenarPorNombre(clientes);
+                break;
+            case "ID Cliente":
+                ordenarPorIdCliente(clientes);
+                break;
+            case "Puntos":
+                ordenarPorPuntos(clientes);
+                break;
+            case "Límite Crédito":
+                ordenarPorLimite(clientes);
+                break;
+            default:
+                break;
         }
     }
 }

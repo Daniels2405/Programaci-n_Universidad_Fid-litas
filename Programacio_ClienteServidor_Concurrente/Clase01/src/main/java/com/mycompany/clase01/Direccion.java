@@ -1,6 +1,9 @@
+
 package com.mycompany.clase01;
 
-public class Direccion {
+import java.io.Serializable;
+
+public class Direccion implements Serializable{
     private String provincia;
     private String canton;
     private String distrito;

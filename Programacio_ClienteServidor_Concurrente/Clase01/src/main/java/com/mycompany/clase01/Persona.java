@@ -4,13 +4,13 @@
  */
 package com.mycompany.clase01;
 import java.sql.Date;
-
+import java.io.Serializable;
 /**
  *
  * @author daniel-2405
  */
 
-public class Persona {
+public class Persona  implements Serializable{
     private String idPersona;
     private String nombreCompleto;
     private String genero;

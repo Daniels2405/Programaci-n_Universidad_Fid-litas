@@ -4,12 +4,14 @@
  */
 package com.mycompany.clase01;
 import java.sql.Date;
+import java.io.Serializable;
 
 /**
  *
  * @author daniel-2405
  */
-public class Cliente extends Persona{
+public class Cliente extends Persona implements Serializable, Comparable<Cliente>{
+    private static final long serialVersionUID = 1L;
     private int idCliente;
     private String membresia;
     private int puntos;
@@ -71,4 +73,11 @@ public class Cliente extends Persona{
         ", membresia=" + membresia + ", puntos=" + puntos + 
         ", limiteCredito=" + limiteCredito + ", direccion= " + direccion +'}';
     }
+    @Override
+    public int compareTo(Cliente o) {
+        //Ordenamiento por numero de cliente
+        return Integer.compare(this.idCliente, o.idCliente);
+    }
+
+    
 }
